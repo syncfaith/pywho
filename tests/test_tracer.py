@@ -12,7 +12,6 @@ from pywho.tracer import (
     ModuleType,
     PathSearchEntry,
     SearchResult,
-    ShadowWarning,
     _classify_module,
     _detect_shadows,
     _find_candidates_on_path,

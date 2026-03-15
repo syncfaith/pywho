@@ -223,10 +223,12 @@ class TestScanPathOptions:
         assert len(results) == 0
 
     def test_underscore_prefix_skipped(self, tmp_path: Path) -> None:
-        (tmp_path / "_thread.py").write_text("")
+        (tmp_path / "_myhelper.py").write_text("")
+        (tmp_path / "math.py").write_text("")
         results = scan_path(tmp_path, check_installed=False)
-        # _thread is in stdlib so it should be detected (it's an exception)
-        assert any(r.module_name == "_thread" for r in results)
+        names = {r.module_name for r in results}
+        assert "_myhelper" not in names
+        assert "math" in names
 
 
 class TestInstalledPackageShadow:
