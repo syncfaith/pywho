@@ -54,12 +54,18 @@ jobs:
         run: uv pip install --system -e ".[dev]"
 
       - name: Run tests with coverage
-        run: pytest -v --cov=pywho --cov-report=xml --cov-fail-under=95
+        run: pytest -v --cov=pywho --cov-branch --cov-report=xml --cov-fail-under=95
 
-      - name: Upload coverage
-        run: |
-          pip install codecov-cli
-          codecovcli upload-process --token ${{ secrets.CODECOV_TOKEN }} --file coverage.xml --git-service github
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   lint:
     runs-on: ubuntu-latest
