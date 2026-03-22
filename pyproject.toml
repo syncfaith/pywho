@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pywho"
-version = "0.3.1"
+version = "0.3.2"
 description = "One command to explain your Python environment, trace imports, and detect shadows."
 readme = "README.md"
 license = "MIT"
@@ -17,7 +17,7 @@ keywords = [
     "interpreter", "diagnostic", "cli", "devtools", "import", "trace",
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
