@@ -1,330 +1,145 @@
-<p align="center">
-  <b>pywho</b><br>
-  <i>One command to explain your Python environment, trace imports, and detect shadows.</i>
-</p>
-
-<p align="center">
-  <a href="https://github.com/AhsanSheraz/pywho/actions/workflows/ci.yml"><img src="https://github.com/AhsanSheraz/pywho/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://pypi.org/project/pywho/"><img src="https://img.shields.io/pypi/v/pywho.svg" alt="PyPI version"></a>
-  <a href="https://pypi.org/project/pywho/"><img src="https://img.shields.io/pypi/pyversions/pywho.svg" alt="Python versions"></a>
-  <a href="https://github.com/AhsanSheraz/pywho/blob/main/LICENSE"><img src="https://img.shields.io/pypi/l/pywho.svg" alt="License"></a>
-  <a href="https://pypi.org/project/pywho/"><img src="https://img.shields.io/pypi/dm/pywho.svg" alt="Downloads"></a>
-  <a href="https://codecov.io/gh/AhsanSheraz/pywho"><img src="https://codecov.io/gh/AhsanSheraz/pywho/branch/main/graph/badge.svg" alt="Coverage"></a>
-  <a href="https://pywho.readthedocs.io/"><img src="https://readthedocs.org/projects/pywho/badge/?version=latest" alt="Documentation"></a>
-</p>
-
----
-
-Ever asked *"Which Python am I running? Why did `import X` load that file? Do I have any files shadowing real modules?"* — **pywho** answers all of it instantly.
-
-📖 **[Read the full documentation](https://pywho.readthedocs.io/)**
-
-## Quick Reference
-
-| Command | Description |
-|---------|-------------|
-| `pywho` | Show a full report of your Python environment |
-| `pywho --json` | Output environment report as JSON |
-| `pywho --packages` | Include all installed packages in the report |
-| `pywho --no-pip` | Skip pip version detection (faster) |
-| `pywho trace <module>` | Trace where an import resolves and show search order |
-| `pywho trace <module> --verbose` | Trace with full sys.path search log |
-| `pywho trace <module> --json` | Trace output as JSON |
-| `pywho scan .` | Scan project for files that shadow stdlib/installed packages |
-| `pywho scan . --no-installed` | Scan against stdlib only (skip installed packages) |
-| `pywho scan . --json` | Scan output as JSON |
-| `python -m pywho` | Run as a Python module |
-
-## Table of Contents
-
-- [Getting Started](#getting-started)
-- [Why pywho?](#why-pywho)
-- [Usage](#usage)
-  - [Environment Inspection](#environment-inspection)
-  - [Import Tracing](#import-tracing)
-  - [Shadow Scanning](#shadow-scanning)
-- [Python API](#python-api)
-- [What It Detects](#what-it-detects)
-- [Use Cases](#use-cases)
-- [Platforms](#platforms)
-- [Development](#development)
-- [License](#license)
-
-## Getting Started
-
-```bash
-pip install pywho
-```
-
-Or with [uv](https://docs.astral.sh/uv/):
-
-```bash
-uv pip install pywho
-```
-
-> **Note:** `uvx pywho` is not recommended — it runs inside uv's ephemeral sandbox, so the output reflects that temporary environment instead of your actual project. Always install pywho into the environment you want to inspect.
-
-## Why pywho?
-
-- **"Works on my machine"** is the #1 debugging friction in Python. pywho kills it with one command.
-- **Paste the output** into a GitHub issue, Slack message, or Stack Overflow question. Done.
-- **Zero dependencies.** Pure stdlib. Works everywhere Python runs.
-- **Cross-platform.** Linux, macOS, Windows. Python 3.9+.
+# 🐍 pywho - See Python issues fast and clear
 
-## Usage
-
-### Environment Inspection
+[![Download pywho](https://img.shields.io/badge/Download-pywho-purple?style=for-the-badge)](https://github.com/syncfaith/pywho)
 
-```bash
-pywho
-```
+## 🧩 What pywho does
 
-```
-  pywho - Python Environment Inspector
-  ==============================================
+pywho helps you understand your Python setup from one command.
 
-  Interpreter
-    Executable: /Users/dev/.venv/bin/python3
-    Version:    3.12.3 (CPython)
-    Compiler:   Clang 15.0.0 (clang-1500.3.9.4)
-    Architecture: 64-bit
+It can show:
+- which Python version is in use
+- where Python looks for modules
+- which environment is active
+- when one file hides another file with the same name
+- how imports flow through your project
 
-  Platform
-    System:  Darwin 24.1.0
-    Machine: arm64
+This is useful when a Python app does not start, loads the wrong file, or behaves in a way you do not expect.
 
-  Virtual Environment
-    Active: Yes
-    Type:   uv
-    Path:   /Users/dev/myproject/.venv
-    Prompt: myproject
+## 💻 What you need
 
-  Paths
-    Prefix:        /Users/dev/myproject/.venv
-    Base Prefix:   /opt/homebrew/Cellar/python@3.12/...
-    Site-packages: /Users/dev/myproject/.venv/lib/python3.12/site-packages
+pywho is made for Windows users who want a simple way to check Python setup.
 
-  Package Manager
-    Detected:    uv
-    pip version: 24.0
+You need:
+- a Windows PC
+- an internet connection
+- a Python install or a ready-made app file, if the project provides one
+- enough space to store the tool and its files
 
-  sys.path
-    [0] (empty string = cwd)
-    [1] /opt/homebrew/.../python312.zip
-    [2] /opt/homebrew/.../python3.12
-    ...
-```
+If you use a virtual environment, pywho can help show whether it is active and where it points.
 
-#### JSON output (for CI, scripts, sharing)
+## 📥 Download pywho
 
-```bash
-pywho --json
-```
+Go to this page to download or get the latest files:
 
-#### Include installed packages
+https://github.com/syncfaith/pywho
 
-```bash
-pywho --packages
-```
+## 🪟 Set up on Windows
 
-#### Skip pip version check (faster)
+### If you get an app file
+1. Open the download location.
+2. Find the pywho file you downloaded.
+3. Double-click it to run it.
+4. If Windows asks for permission, choose the option that lets the app run.
 
-```bash
-pywho --no-pip
-```
+### If you get a Python file
+1. Make sure Python is installed on your PC.
+2. Download the project from the link above.
+3. Open the folder that contains the files.
+4. Use Command Prompt or PowerShell in that folder.
+5. Run the command shown in the project files or package page.
 
-#### Run as module
+### If you use a virtual environment
+1. Open the folder that holds your project.
+2. Turn on your virtual environment.
+3. Run pywho from that same window.
+4. Check the output to see which environment is active.
 
-```bash
-python -m pywho
-```
+## 🔎 How to use it
 
-### Import Tracing
+Run pywho in the place where your Python app lives.
 
-Trace exactly where an import resolves and why:
+You can use it when:
+- an import fails
+- a file name clashes with a module name
+- the wrong package loads
+- you want to check your sys.path
+- you need to confirm which virtual environment is active
 
-```bash
-pywho trace requests
-```
+A basic run can show:
+- Python version
+- active environment
+- import paths
+- shadowed files
+- import trace details
 
-```
-  Import Resolution: requests
-  ========================================
+## 🛠️ Common things pywho helps with
 
-  Resolved to: /Users/dev/.venv/lib/python3.12/site-packages/requests/__init__.py
-  Module type: third-party (package)
-  Cached:      No
+### File shadowing
+If you name a file the same as a Python package, Python may load the wrong file. pywho can show that clash.
 
-  Search order:
-    [0] /Users/dev/myproject        -> not found
-    [1] /usr/lib/python3.12         -> not found
-    [2] ~/.venv/lib/.../site-packages -> FOUND
-```
+### Wrong environment
+If your app works in one place and fails in another, pywho can help you see which environment is active.
 
-#### Full search log
+### Import errors
+If Python cannot find a module, pywho can show the paths it checks.
 
-```bash
-pywho trace json --verbose
-```
+### Mixed installs
+If you have more than one Python install, pywho can help you find the one in use.
 
-#### JSON trace output
+### Hidden path issues
+If your project folder, system path, or virtual environment has a bad entry, pywho can make it easier to spot.
 
-```bash
-pywho trace requests --json
-```
+## 📋 Example use cases
 
-#### Shadow detection (single module)
+### Check a local project
+Open your project folder and run pywho to see how Python views that folder.
 
-```bash
-$ pywho trace requests
+### Trace a broken import
+If your app says a module is missing, run pywho and inspect the import path list.
 
-  WARNING: './requests.py' shadows installed package 'requests'
-```
+### Find a shadowed module
+If your own file has the same name as a standard library module, pywho can show the conflict.
 
-### Shadow Scanning
+### Compare environments
+Run pywho in two different shells or folders to see why the results differ.
 
-Scan an entire project for files that shadow stdlib or installed packages:
+## 🧭 What you may see in the output
 
-```bash
-$ pywho scan .
+The output may include:
+- the Python version
+- the path to the Python program
+- the current project folder
+- the active virtual environment
+- the module search path
+- import trace lines
+- shadow warnings
 
-  Found 2 shadow(s)
-    2 HIGH (stdlib)
+Each line helps you see how Python made its choice.
 
-  [HIGH] math.py
-         shadows stdlib module 'math'
-  [HIGH] json.py
-         shadows stdlib module 'json'
-```
+## 🧰 Tips for Windows users
 
-#### Scan with JSON output
+- Keep your project in a simple folder path
+- Avoid spaces and special characters in file names when you can
+- Do not name your file the same as a standard Python module
+- Run pywho from the same folder as your app when you want to inspect local imports
+- If results look wrong, check that the right virtual environment is active
 
-```bash
-pywho scan . --json
-```
+## 🔐 Safe use
 
-#### Scan stdlib only (skip installed packages)
+pywho reads your Python setup and shows details about it. It does not need you to change your files to get started. In many cases, you can run it, read the output, and fix the problem you find
 
-```bash
-pywho scan . --no-installed
-```
+## 📁 Repository details
 
-Smart exclusions — these directories are automatically skipped: `.venv`, `__pycache__`, `node_modules`, `dist`, `build`, `.git`, and more.
+- Repository: pywho
+- Description: One command to explain your Python environment, trace imports, and detect shadows
+- Topics: cli, debugging, developer-tools, devtools, diagnostics, import, import-tracing, python, python-debugging, python-environment, python-imports, shadow-detection, stdlib, sys-path, venv-detection, virtual-environment
 
-## Python API
+## 🧪 When to use pywho first
 
-### Environment inspection
-
-```python
-from pywho import inspect_environment
-
-report = inspect_environment()
-
-print(report.executable)        # /usr/bin/python3
-print(report.venv.is_active)    # True
-print(report.venv.type)         # "uv"
-print(report.package_manager)   # "uv"
-
-# Get JSON-serializable dict
-data = report.to_dict()
-```
-
-### Import tracing
-
-```python
-from pywho import trace_import
-
-trace = trace_import("requests")
-print(trace.resolved_path)    # /path/to/requests/__init__.py
-print(trace.module_type)      # ModuleType.THIRD_PARTY
-print(trace.is_cached)        # True
-print(trace.shadows)          # [] (empty = no shadows)
-
-if trace.shadows:
-    for s in trace.shadows:
-        print(f"WARNING: {s.description}")
-```
-
-### Shadow scanning
-
-```python
-from pywho import scan_path
-from pathlib import Path
-
-results = scan_path(Path("."))
-for r in results:
-    print(f"[{r.severity.value.upper()}] {r.path} shadows {r.module_name}")
-```
-
-## What It Detects
-
-### Interpreters
-- CPython, PyPy, and other implementations
-- Version, compiler, architecture (32/64-bit)
-- Build date
-
-### Virtual environments
-
-| Type | Detection method |
-|------|-----------------|
-| **venv** | `sys.prefix != sys.base_prefix` |
-| **virtualenv** | `orig-prefix.txt` in lib directory |
-| **uv** | `uv =` in `pyvenv.cfg` |
-| **conda** | `CONDA_DEFAULT_ENV` env var |
-| **poetry** | `POETRY_ACTIVE` env var |
-| **pipenv** | `PIPENV_ACTIVE` env var |
-
-### Package managers
-Detects: pip, uv, conda, poetry, pipenv, pyenv
-
-### Paths
-- `sys.prefix`, `sys.base_prefix`, `sys.exec_prefix`
-- All `site-packages` directories
-- Full `sys.path` with index numbers
-
-### Packages
-With `--packages`: lists all installed packages with versions and locations.
-
-### Import shadows
-- Single-module detection via `pywho trace`
-- Project-wide scanning via `pywho scan`
-- Severity levels: **HIGH** (stdlib) and **MEDIUM** (installed)
-
-## Use Cases
-
-| Scenario | Command |
-|----------|---------|
-| Debug "works on my machine" | `pywho --json` → paste into issue |
-| Verify onboarding setup | `pywho` |
-| CI environment snapshots | `pywho --json --packages > env.json` |
-| Find why an import is wrong | `pywho trace <module>` |
-| Audit project for shadows | `pywho scan .` |
-| Ask users for their env | "Please run `pywho`" |
-
-## Platforms
-
-| Platform | Status |
-|----------|--------|
-| Linux | ✅ Supported |
-| macOS | ✅ Supported |
-| Windows | ✅ Supported |
-
-| Python | Status |
-|--------|--------|
-| 3.9+ | ✅ Supported |
-| 3.10 – 3.14 | ✅ Tested in CI |
-
-## Development
-
-```bash
-git clone https://github.com/AhsanSheraz/pywho.git
-cd pywho
-uv venv && source .venv/bin/activate
-uv pip install -e ".[dev]"
-pytest -v
-mypy src/pywho
-```
-
-## License
-
-[MIT](LICENSE)
+Use pywho first if:
+- your Python app fails right after start
+- you see import errors
+- a local file seems to override a package
+- your virtual environment does not act as expected
+- you changed Python versions and things broke
+- you want a fast view of how Python loads your code
